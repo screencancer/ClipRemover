@@ -3,7 +3,7 @@ import os
 
 # Set new exclusion date
 def setExclusionDate():
-    date = input("Input a date in the Format MM/DD/YYYY")
+    date = input("Input a date in the Format MM/DD/YYYY\n")
     dt.datetime.strptime(date, "%m/%d/%Y")
     file = open('Exclusions.txt', 'a+')
     file.write(date + "\n")
@@ -15,7 +15,7 @@ def setExclusionDate():
 def setFileMax():
     while True:
         try:
-            maxFileSize = int(input("Enter how many MB should be maximum on a file?"))
+            maxFileSize = int(input("Enter how many MB should be maximum on a file?\n"))
             break
         except:
             print("Invalid option you need an integer. Example: 500")
@@ -30,7 +30,7 @@ def setFileMax():
 def setDir():
     while True:
         try:
-            path = input("Give a directory path")
+            path = input("Give a directory path\n")
             if os.path.exists(path):
                 break
             else:
@@ -46,8 +46,9 @@ def setDir():
 
 # Menu
 def Menu():
-    option = input("1. Set a new Exclusion date \n2. Set max file size to keep\n3. Set file directory for the "
-                   "deletion\n")
+    option = input("1. Set a new Exclusion date \n"
+                   "2. Set max file size to keep\n"
+                   "3. Set file directory for the deletion\n")
     if (int(option)) == 1:
         setExclusionDate()
     elif (int(option)) == 2:
