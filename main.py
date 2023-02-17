@@ -1,7 +1,6 @@
 import os
 import datetime
 from dateutil.relativedelta import relativedelta
-from dateutil.parser import parser
 
 
 def Setup():
