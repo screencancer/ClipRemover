@@ -37,8 +37,8 @@ def setDir():
                 raise Exception("Not a valid path")
         except:
             print("Invalid option you need to give a path")
-    file = open('Directories.txt', 'a+')
-    file.write(path + "\n")
+    file = open('Directories.txt', 'w')
+    file.write(path)
     file.close()
     print(f'Successfully added {path} to Directories')
     Menu()
@@ -48,13 +48,19 @@ def setDir():
 def Menu():
     option = input("1. Set a new Exclusion date \n"
                    "2. Set max file size to keep\n"
-                   "3. Set file directory for the deletion\n")
+                   "3. Set file directory for the deletion\n"
+                   "0. Quit settings application")
     if (int(option)) == 1:
         setExclusionDate()
     elif (int(option)) == 2:
         setFileMax()
     elif (int(option)) == 3:
         setDir()
+    elif (int(option)) == 0:
+        quit()
+    else:
+        print("Invalid option")
+        Menu()
 
 
 Menu()
