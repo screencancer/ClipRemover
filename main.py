@@ -2,11 +2,10 @@ import os
 import datetime
 from dateutil.relativedelta import relativedelta
 
-
 def Setup():
-    Directories = open("Directories.txt", "r")
-    dir = Directories.readline().rstrip()
-    Directories.close()
+    DirectoriesList = open("Directories.txt", "r")
+    directories = DirectoriesList.readline().rstrip()
+    DirectoriesList.close()
 
     FSFile = open("FileSizeMax.txt", "r")
     FileSizeMax = FSFile.readline().rstrip()
@@ -18,23 +17,24 @@ def Setup():
 
     lastDate = datetime.datetime.now() - relativedelta(weeks=1)
     formattedDate = lastDate.strftime("%m/%d/%Y")
+    print(dir, FileSizeMax, ExclusionList, formattedDate)
     return dir, FileSizeMax, ExclusionList, formattedDate
 
 
-#Get clips in directory
+# Get clips in directory
 def getFiles(dirs):
     list = []
-    list= os.listdir(dirs)
+    list = os.listdir(dirs)
     return list
 
 
 # Delete any clips older than the last date and larger than the MB set in the FileSizeMax.txt. Exclude any thing set in exclusions file.
-def delFiles(files, FileSizeMax, ExclusionList, dirs, lastdate):
+def delFiles(files, FileSizeMax, ExclusionList, directories, lastdate):
     print(files)
-    lDate = datetime.datetime.strptime(lastdate,"%m/%d/%Y")
+    lDate = datetime.datetime.strptime(lastdate, "%m/%d/%Y")
     for file in files:
         print(file)
-        path = os.path.join(dirs, file)
+        path = os.path.join(directories, file)
         print(path)
         timecreated = os.path.getctime(path)
         size = os.path.getsize(path) >> 20
@@ -47,7 +47,7 @@ def delFiles(files, FileSizeMax, ExclusionList, dirs, lastdate):
 
 
 dirList, FileSizeMax, ExclusionList, lastmonth = Setup()
-print(dir)
+print(dirList)
 print(FileSizeMax)
 print(ExclusionList)
 maxFile = int(FileSizeMax)
