@@ -1,5 +1,7 @@
 import os
 import datetime
+import pyuac
+import sys
 from dateutil.relativedelta import relativedelta
 
 def Setup():
@@ -17,8 +19,8 @@ def Setup():
 
     lastDate = datetime.datetime.now() - relativedelta(weeks=1)
     formattedDate = lastDate.strftime("%m/%d/%Y")
-    print(dir, FileSizeMax, ExclusionList, formattedDate)
-    return dir, FileSizeMax, ExclusionList, formattedDate
+    print(directories, FileSizeMax, ExclusionList, formattedDate)
+    return directories, FileSizeMax, ExclusionList, formattedDate
 
 
 # Get clips in directory
@@ -46,6 +48,13 @@ def delFiles(files, FileSizeMax, ExclusionList, directories, lastdate):
             os.remove(path)
 
 
+if __name__ == "__main__":
+    if not pyuac.isUserAdmin():
+        print("Re-launching as admin!")
+        pyuac.runAsAdmin()
+        sys.exit()
+    else:
+        Setup()  # Already an admin here.
 dirList, FileSizeMax, ExclusionList, lastmonth = Setup()
 print(dirList)
 print(FileSizeMax)
