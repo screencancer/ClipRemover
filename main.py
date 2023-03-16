@@ -25,9 +25,9 @@ def Setup():
 
 # Get clips in directory
 def getFiles(dirs):
-    list = []
-    list = os.listdir(dirs)
-    return list
+    dirlist = []
+    dirlist = os.listdir(dirs)
+    return dirlist
 
 
 # Delete any clips older than the last date and larger than the MB set in the FileSizeMax.txt. Exclude any thing set in exclusions file.
