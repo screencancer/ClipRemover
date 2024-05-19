@@ -53,10 +53,17 @@ def delFiles(files, FileSizeMax, ExclusionList, directories, lastdate):
 
 
 if __name__ == "__main__":
+
+    configFilesExist = os.path.isfile("./Directories.txt") and os.path.isfile("./FileSizeMax.txt") and os.path.isfile("./Exclusions.txt")
+    print(configFilesExist)
+
     if not pyuac.isUserAdmin():
         print("Re-launching as admin!")
         pyuac.runAsAdmin()
         sys.exit()
+    if configFilesExist is False:
+        print("Config files missing running settings script")
+        exec(open("settings.py").read())
     else:
         Setup()  # Already an admin here.
 dirList, numOfDir, FileSizeMax, ExclusionList, lastmonth = Setup()

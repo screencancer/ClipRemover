@@ -49,6 +49,7 @@ def Menu():
     option = input("1. Set a new Exclusion date \n"
                    "2. Set max file size to keep\n"
                    "3. Set file directory for the deletion\n"
+                   "4. Run the main script\n"
                    "0. Quit settings application")
     if (int(option)) == 1:
         setExclusionDate()
@@ -56,6 +57,8 @@ def Menu():
         setFileMax()
     elif (int(option)) == 3:
         setDir()
+    elif (int(option)) == 4:
+        exec(open("main.py").read())
     elif (int(option)) == 0:
         quit()
     else:
