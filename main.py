@@ -67,7 +67,7 @@ maxFile = int(FileSizeMax)
 
 idxOfDir = 0
 for directory in dirList:
-    print(dirList[idxOfDir] + "a")
+    print(dirList[idxOfDir])
     files = getFiles(dirList[idxOfDir])
     delFiles(files, maxFile, ExclusionList, dirList[idxOfDir], lastmonth)
     idxOfDir += 1
