@@ -6,8 +6,11 @@ from dateutil.relativedelta import relativedelta
 
 def Setup():
     DirectoriesList = open("Directories.txt", "r")
-    directories = DirectoriesList.readline().rstrip()
+    directories = [line.rstrip() for line in DirectoriesList]
     DirectoriesList.close()
+
+    numOfDir = len(directories)
+    print(numOfDir)
 
     FSFile = open("FileSizeMax.txt", "r")
     FileSizeMax = FSFile.readline().rstrip()
@@ -19,14 +22,15 @@ def Setup():
 
     lastDate = datetime.datetime.now() - relativedelta(weeks=1)
     formattedDate = lastDate.strftime("%m/%d/%Y")
-    print(directories, FileSizeMax, ExclusionList, formattedDate)
-    return directories, FileSizeMax, ExclusionList, formattedDate
+    print(directories, numOfDir, FileSizeMax, ExclusionList, formattedDate)
+    return directories, numOfDir, FileSizeMax, ExclusionList, formattedDate
 
 
 # Get clips in directory
 def getFiles(dirs):
     dirlist = []
     dirlist = os.listdir(dirs)
+    print(dirlist)
     return dirlist
 
 
@@ -55,10 +59,15 @@ if __name__ == "__main__":
         sys.exit()
     else:
         Setup()  # Already an admin here.
-dirList, FileSizeMax, ExclusionList, lastmonth = Setup()
+dirList, numOfDir, FileSizeMax, ExclusionList, lastmonth = Setup()
 print(dirList)
 print(FileSizeMax)
 print(ExclusionList)
 maxFile = int(FileSizeMax)
-files = getFiles(dirList)
-delFiles(files, maxFile, ExclusionList, dirList, lastmonth)
+
+idxOfDir = 0
+for directory in dirList:
+    print(dirList[idxOfDir] + "a")
+    files = getFiles(dirList[idxOfDir])
+    delFiles(files, maxFile, ExclusionList, dirList[idxOfDir], lastmonth)
+    idxOfDir += 1
