@@ -37,8 +37,8 @@ def setDir():
                 raise Exception("Not a valid path")
         except:
             print("Invalid option you need to give a path")
-    file = open('Directories.txt', 'w')
-    file.write(path)
+    file = open('Directories.txt', 'a+')
+    file.write(path + "\n")
     file.close()
     print(f'Successfully added {path} to Directories')
     Menu()
