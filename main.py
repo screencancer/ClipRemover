@@ -5,12 +5,13 @@ import sys
 from dateutil.relativedelta import relativedelta
 
 def Setup():
+    #Open directories.txt and grab the list
     DirectoriesList = open("Directories.txt", "r")
     directories = [line.rstrip() for line in DirectoriesList]
     DirectoriesList.close()
 
     numOfDir = len(directories)
-    print(numOfDir)
+    #print(numOfDir)
 
     FSFile = open("FileSizeMax.txt", "r")
     FileSizeMax = FSFile.readline().rstrip()
@@ -22,7 +23,7 @@ def Setup():
 
     lastDate = datetime.datetime.now() - relativedelta(weeks=1)
     formattedDate = lastDate.strftime("%m/%d/%Y")
-    print(directories, numOfDir, FileSizeMax, ExclusionList, formattedDate)
+    #print(directories, numOfDir, FileSizeMax, ExclusionList, formattedDate)
     return directories, numOfDir, FileSizeMax, ExclusionList, formattedDate
 
 
@@ -30,7 +31,7 @@ def Setup():
 def getFiles(dirs):
     dirlist = []
     dirlist = os.listdir(dirs)
-    print(dirlist)
+    #print(dirlist)
     return dirlist
 
 
@@ -39,14 +40,14 @@ def delFiles(files, FileSizeMax, ExclusionList, directories, lastdate):
     print(files)
     lDate = datetime.datetime.strptime(lastdate, "%m/%d/%Y")
     for file in files:
-        print(file)
+        #print(file)
         path = os.path.join(directories, file)
-        print(path)
+        #print(path)
         timecreated = os.path.getctime(path)
         size = os.path.getsize(path) >> 20
         date = datetime.datetime.fromtimestamp(timecreated).strftime("%m/%d/%Y")
         parseddate = datetime.datetime.strptime(date, "%m/%d/%Y")
-        print(f'{file} created on {date} and is {size} MB\n')
+        #print(f'{file} created on {date} and is {size} MB\n')
         if date not in ExclusionList and size > FileSizeMax and parseddate <= lDate:
             print(f"Delete {file} {date} {size} MB")
             os.remove(path)
@@ -55,7 +56,7 @@ def delFiles(files, FileSizeMax, ExclusionList, directories, lastdate):
 if __name__ == "__main__":
 
     configFilesExist = os.path.isfile("./Directories.txt") and os.path.isfile("./FileSizeMax.txt") and os.path.isfile("./Exclusions.txt")
-    print(configFilesExist)
+    #print(configFilesExist)
 
     if not pyuac.isUserAdmin():
         print("Re-launching as admin!")
@@ -67,14 +68,14 @@ if __name__ == "__main__":
     else:
         Setup()  # Already an admin here.
 dirList, numOfDir, FileSizeMax, ExclusionList, lastmonth = Setup()
-print(dirList)
-print(FileSizeMax)
-print(ExclusionList)
+#print(dirList)
+#print(FileSizeMax)
+#print(ExclusionList)
 maxFile = int(FileSizeMax)
 
 idxOfDir = 0
 for directory in dirList:
-    print(dirList[idxOfDir])
+    #print(dirList[idxOfDir])
     files = getFiles(dirList[idxOfDir])
     delFiles(files, maxFile, ExclusionList, dirList[idxOfDir], lastmonth)
     idxOfDir += 1
