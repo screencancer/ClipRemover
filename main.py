@@ -13,14 +13,17 @@ def Setup():
     numOfDir = len(directories)
     #print(numOfDir)
 
+    #Get file size max
     FSFile = open("FileSizeMax.txt", "r")
     FileSizeMax = FSFile.readline().rstrip()
     FSFile.close()
 
+    #Dates to exclude from scan
     Exclusions = open("Exclusions.txt", "r")
     ExclusionList = [line.rstrip() for line in Exclusions]
     Exclusions.close()
 
+    #Get date and subtract a week
     lastDate = datetime.datetime.now() - relativedelta(weeks=1)
     formattedDate = lastDate.strftime("%m/%d/%Y")
     #print(directories, numOfDir, FileSizeMax, ExclusionList, formattedDate)
@@ -39,6 +42,8 @@ def getFiles(dirs):
 def delFiles(files, FileSizeMax, ExclusionList, directories, lastdate):
     print(files)
     lDate = datetime.datetime.strptime(lastdate, "%m/%d/%Y")
+
+    #Iterate through files and delete based on settings
     for file in files:
         #print(file)
         path = os.path.join(directories, file)
@@ -58,6 +63,7 @@ if __name__ == "__main__":
     configFilesExist = os.path.isfile("./Directories.txt") and os.path.isfile("./FileSizeMax.txt") and os.path.isfile("./Exclusions.txt")
     #print(configFilesExist)
 
+    #If user not admin relaunch as admin, check if config exists
     if not pyuac.isUserAdmin():
         print("Re-launching as admin!")
         pyuac.runAsAdmin()
@@ -67,6 +73,8 @@ if __name__ == "__main__":
         exec(open("settings.py").read())
     else:
         Setup()  # Already an admin here.
+
+#Set variables
 dirList, numOfDir, FileSizeMax, ExclusionList, lastmonth = Setup()
 #print(dirList)
 #print(FileSizeMax)
